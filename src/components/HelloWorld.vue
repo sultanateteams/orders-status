@@ -178,7 +178,10 @@ async function fetchOrders() {
 
     if (error) throw error;
 
-    orders.value = data || [];
+    // ❗ Null order_id chiqib ketmasligi uchun filtr qo‘shildi
+    orders.value = (data || []).filter((o: any) => o.order_id !== null);
+
+    // Agar hech qanday order bo‘lmasa checkedMap ham bo‘sh bo‘lsin
     checkedMap.value = {};
     for (const o of orders.value) {
       checkedMap.value[o.order_id] = true;
